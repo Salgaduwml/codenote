@@ -1,5 +1,6 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
+import ContentArea from "../components/contentArea/ContentArea";
 
 const DashboardLayout = ({
   children,
@@ -9,7 +10,7 @@ const DashboardLayout = ({
   return (
     <div className="flex">
       <Sidebar />
-      {children}
+      <ContentArea>{children}</ContentArea>
     </div>
   );
 };
