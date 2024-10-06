@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { SingleNote } from "@/app/Types";
 import { useGlobalContext } from "@/ContextApi";
 import { Search } from "lucide-react";
+import { allLanguages } from "@/app/localData/Languages";
 
 const SearchBar = () => {
   return (
@@ -32,17 +33,30 @@ function SnippetButton() {
     const newSingleNote: SingleNote = {
       _id: uuidv4(),
       title: "",
-      createdAt: "",
+      createdAt: formatDate(new Date()),
       code: "",
       isFavorite: false,
       discription: "",
-      language: "",
+      language: allLanguages[0],
       tags: [],
     };
     setIsNewNote(true);
     setSelectedNote(newSingleNote);
     setOpenContent(true);
   };
+
+  function formatDate(date: Date) {
+    const options: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    };
+    return new Intl.DateTimeFormat("en-US", options).format(date);
+  }
 
   return (
     <div
