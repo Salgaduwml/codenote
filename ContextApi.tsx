@@ -9,7 +9,15 @@ import {
   TableProperties,
   Trash2,
 } from "lucide-react";
-import { DarkModeType, SidebarMenu, SingleNote, SingleTag } from "./app/Types";
+import {
+  DarkModeType,
+  SidebarMenu,
+  SingleNote,
+  SingleTag,
+  Language,
+} from "./app/Types";
+import { SiCss3, SiJavascript, SiPython } from "react-icons/si";
+import { allLanguages } from "./app/localData/Languages";
 
 interface GlobalContexType {
   sidebarMenuObject: {
@@ -47,6 +55,10 @@ interface GlobalContexType {
   selectedTagsObject: {
     selectedTags: SingleTag[];
     setSelectedTags: React.Dispatch<React.SetStateAction<SingleTag[]>>;
+  };
+  selectedLanguageObject: {
+    selectedLanguage: Language | null;
+    setSelectedLanguage: React.Dispatch<React.SetStateAction<Language | null>>;
   };
 }
 
@@ -86,6 +98,10 @@ const contextProvider = createContext<GlobalContexType>({
   selectedTagsObject: {
     selectedTags: [],
     setSelectedTags: () => {},
+  },
+  selectedLanguageObject: {
+    selectedLanguage: null,
+    setSelectedLanguage: () => {},
   },
 });
 
@@ -141,6 +157,9 @@ export default function GlobalContextProvider({
   const [isNewNote, setIsNewNote] = useState(false);
   const [allTags, setAllTags] = useState<SingleTag[]>([]);
   const [selectedTags, setSelectedTags] = useState<SingleTag[]>([]);
+  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(
+    allLanguages[0]
+  );
 
   useEffect(() => {
     function updateNotes() {
@@ -157,7 +176,11 @@ export default function GlobalContextProvider({
           discription:
             "This note covers the basic concepts of JavaScript, including variables, data types, and control structures.",
           code: `const greet = () => console.log("Hello, world!");`,
-          language: "JavaScript",
+          language: {
+            id: "1",
+            name: "JavaScript",
+            icon: <SiJavascript />,
+          },
           createdAt: "2024-09-29T10:00:00Z",
         },
         {
@@ -177,7 +200,11 @@ export default function GlobalContextProvider({
         justify-content: center;
         align-items: center;
       }`,
-          language: "CSS",
+          language: {
+            id: "2",
+            name: "CSS",
+            icon: <SiCss3 />,
+          },
           createdAt: "2024-09-28T15:30:00Z",
         },
         {
@@ -191,7 +218,11 @@ export default function GlobalContextProvider({
           discription:
             "Explanation of list comprehensions in Python with examples.",
           code: `squares = [x * x for x in range(10)]`,
-          language: "Python",
+          language: {
+            id: "3",
+            name: "Python",
+            icon: <SiPython />,
+          },
           createdAt: "2024-09-27T08:45:00Z",
         },
       ];
@@ -258,6 +289,7 @@ export default function GlobalContextProvider({
         isNewNoteObject: { isNewNote, setIsNewNote },
         allTagsObject: { allTags, setAllTags },
         selectedTagsObject: { selectedTags, setSelectedTags },
+        selectedLanguageObject: { selectedLanguage, setSelectedLanguage },
       }}
     >
       {children}

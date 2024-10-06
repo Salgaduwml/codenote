@@ -1,5 +1,5 @@
 "use client";
-import type { SingleNote, SingleTag } from "@/app/Types";
+import type { Language, SingleNote, SingleTag } from "@/app/Types";
 import { useGlobalContext } from "@/ContextApi";
 import { LucideDelete, LucideHeart, LucideTrash } from "lucide-react";
 import React from "react";
@@ -98,24 +98,27 @@ function NoteDescription({ description }: { description: string }) {
 }
 
 interface CodeBlockProps {
-  language: string;
+  language: Language;
   codeString: string;
 }
 
 const CodeBlock: React.FC<CodeBlockProps> = ({ language, codeString }) => {
   return (
     <div className="rounded-md overflow-hidden text-sm mt-4">
-      <SyntaxHighlighter language={language} style={docco}>
+      <SyntaxHighlighter language={language.name} style={docco}>
         {codeString}
       </SyntaxHighlighter>
     </div>
   );
 };
 
-function NoteFooter({ language }: { language: string }) {
+function NoteFooter({ language }: { language: Language }) {
   return (
     <div className="text-slate-400 text-sm mt-4 flex justify-between items-center gap-4">
-      <div className="text-sm">{language}</div>
+      <div className="text-sm flex items-center gap-1">
+        {language.icon}
+        {language.name}
+      </div>
       <div className="">
         <LucideTrash size={18} strokeWidth={1.5} />
       </div>

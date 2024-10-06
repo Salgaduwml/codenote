@@ -18,11 +18,17 @@ export interface SingleNote {
   tags: SingleTag[];
   discription: string;
   code: string;
-  language: string;
+  language: Language;
   createdAt: string;
 }
 
 export interface SingleTag {
   _id: string;
   name: string;
+}
+
+export interface Language {
+  id: string;
+  name: string;
+  icon: React.ReactNode;
 }
